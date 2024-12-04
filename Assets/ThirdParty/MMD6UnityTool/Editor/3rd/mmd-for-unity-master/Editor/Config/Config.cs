@@ -14,6 +14,7 @@ namespace MMD
     public class Config : ScriptableObject
     {
         static Config config_ = null;
+        static string config_path = string.Empty;
         public InspectorConfig inspector_config = null;
         public PMDImportConfig pmd_config = null;
         public VMDImportConfig vmd_config = null;
@@ -21,6 +22,9 @@ namespace MMD
         private List<ConfigBase> update_list = null;
         public void OnEnable()
         {
+            //Init the config path;
+            GetConfigPath();
+
             if (inspector_config == null)
             {
                 inspector_config = new InspectorConfig();
@@ -65,11 +69,11 @@ namespace MMD
         /// Configが配置された場所から保存先を生成します
         /// </summary>
         /// <returns>アセット保存先のパス</returns>
-        public static string GetConfigPath()
+        public string GetConfigPath()
         {
-            var path = AssetDatabase.GetAllAssetPaths().Where(item => item.Contains("Config.cs")).First();
-            path = path.Substring(0, path.LastIndexOf('/') + 1) + "Config.asset";
-            return path;
+            config_path = AssetDatabase.GetAssetPath(MonoScript.FromScriptableObject(this));
+            config_path = config_path.Substring(0, config_path.LastIndexOf('/') + 1) + "Config.asset";
+            return config_path;
         }
 
         /// <summary>
@@ -80,7 +84,7 @@ namespace MMD
         {
             if (config_ == null)
             {
-                var path = Config.GetConfigPath();
+                var path = config_path;
                 config_ = (Config)AssetDatabase.LoadAssetAtPath(path, typeof(Config));
                 
                 //// なかったら作成する
