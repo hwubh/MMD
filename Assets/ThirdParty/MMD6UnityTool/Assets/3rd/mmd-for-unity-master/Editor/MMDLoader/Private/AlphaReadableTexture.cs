@@ -2,6 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public class AlphaReadableTexture : System.IDisposable {
 
@@ -60,14 +61,24 @@ public class AlphaReadableTexture : System.IDisposable {
 	/// <param name="texture_path">テクスチャパス</param>
 	private void CreateReadableTexture(string texture_path)
 	{
-		if (!string.IsNullOrEmpty(texture_path)) {
+        // Add the path checking. 
+        try
+		{
+			if (!System.IO.File.Exists(current_directory_ + texture_path))
+				throw new System.Exception($"Texture Path: {texture_path} doesn't exist");
+
 			string base_texture_path = current_directory_ + texture_path;
 			string readable_texture_path = temporary_directory_ + texture_path;
 			CreateDirectoryPath(System.IO.Path.GetDirectoryName(readable_texture_path));
 			bool is_copy_success = AssetDatabase.CopyAsset(base_texture_path, readable_texture_path);
-			if (!is_copy_success) {
+			if (!is_copy_success)
+			{
 				throw new System.InvalidOperationException();
 			}
+		}
+        catch (Exception ex)
+		{
+			Debug.LogError(ex.Message);
 		}
 	}
 	

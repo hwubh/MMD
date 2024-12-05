@@ -852,25 +852,26 @@ namespace MMD
 		/// <param name='texture'>シェーダーに設定するメインテクスチャ</param>
 		/// <param name='is_transparent'>透過か</param>
 		string GetMmdShaderPath(PMXFormat.Material material, Texture2D texture, bool is_transparent) {
-			string result = "MMD/";
-			if (IsTransparentMaterial(is_transparent)) {
-				result += "Transparent/";
-			}
-			result += "PMDMaterial";
-			if (IsEdgeMaterial(material)) {
-				result += "-with-Outline";
-			}
-			if (IsCullBackMaterial(material)) {
-				result += "-CullBack";
-			}
-			if (IsNoCastShadowMaterial(material)) {
-				result += "-NoCastShadow";
-			}
-#if MFU_ENABLE_NO_RECEIVE_SHADOW_SHADER	//影受け無しのシェーダはまだ無いので無効化
-			if (IsNoReceiveShadowMaterial(material)) {
-				result += "-NoReceiveShadow";
-			}
-#endif //MFU_ENABLE_NO_RECEIVE_SHADOW_SHADER
+			//			string result = "MMD/";
+			//			if (IsTransparentMaterial(is_transparent)) {
+			//				result += "Transparent/";
+			//			}
+			//			result += "PMDMaterial";
+			//			if (IsEdgeMaterial(material)) {
+			//				result += "-with-Outline";
+			//			}
+			//			if (IsCullBackMaterial(material)) {
+			//				result += "-CullBack";
+			//			}
+			//			if (IsNoCastShadowMaterial(material)) {
+			//				result += "-NoCastShadow";
+			//			}
+			//#if MFU_ENABLE_NO_RECEIVE_SHADOW_SHADER	//影受け無しのシェーダはまだ無いので無効化
+			//			if (IsNoReceiveShadowMaterial(material)) {
+			//				result += "-NoReceiveShadow";
+			//			}
+			//#endif //MFU_ENABLE_NO_RECEIVE_SHADOW_SHADER
+			string result = "Toon";
 			return result;
 		}
 
