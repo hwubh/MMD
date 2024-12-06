@@ -62,9 +62,9 @@ namespace MMD_URP
 
         MeshTopology GetMeshTopology(byte flag) 
         {
-            if (flag | (byte) PMXMaterial.Flag.PointDrawing == )
+            if ((flag & (byte) PMXMaterial.Flag.PointDrawing) == (byte)PMXMaterial.Flag.PointDrawing)
                 return MeshTopology.Points;
-            if (flag == PMXMaterial.Flag.LineDrawing)
+            if ((flag & (byte)PMXMaterial.Flag.LineDrawing) == (byte)PMXMaterial.Flag.LineDrawing)
                 return MeshTopology.Lines;
 
             return MeshTopology.Triangles;
